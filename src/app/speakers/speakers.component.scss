@@ -2,6 +2,13 @@
   margin-bottom: 2rem;
 }
 
+.filter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
 .speaker-list {
   display: flex;
   flex-wrap: wrap;

@@ -1,6 +1,10 @@
 <h2 class="heading">This year's speakers:</h2>
+<div class="filter">
+  <label for="filter">Filter speakers:</label>
+  <input type="text" name="filter" [formControl]="filter" />
+</div>
 <div class="speaker-list">
-  @for (speaker of speakers(); track $index) {
+  @for (speaker of filteredSpeakers(); track $index) {
     <app-speaker-card [speaker]="speaker"></app-speaker-card>
   }
 </div>
