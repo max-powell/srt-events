@@ -44,23 +44,30 @@ const mockSpeakers: Speaker[] = [
   },
 ];
 const mockResponse: RandomuserResponse = {
+  info: {
+    page: 1,
+    results: 10,
+  },
   results: mockSpeakers,
 };
 
 describe('SpeakersService', () => {
   let service: SpeakersService;
-  const mock = jasmine.createSpyObj<HttpClient>('HttpClient', ['get']);
+  const mockHttpClient = jasmine.createSpyObj<HttpClient>('HttpClient', [
+    'get',
+  ]);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [{ provide: HttpClient, useValue: mock }],
+      providers: [{ provide: HttpClient, useValue: mockHttpClient }],
     });
     service = TestBed.inject(SpeakersService);
   });
 
-  it('should return a list of speakers', () => {
-    mock.get.and.returnValue(of(mockResponse));
-    const speakers = TestBed.runInInjectionContext(() => service.getSpeakers());
-    expect(speakers()).toBe(mockSpeakers);
+  it('should return a RandomUser response', () => {
+    mockHttpClient.get.and.returnValue(of(mockResponse));
+    service.getSpeakers().subscribe((response) => {
+      expect(response).toBe(mockResponse);
+    });
   });
 });

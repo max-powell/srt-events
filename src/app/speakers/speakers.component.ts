@@ -1,4 +1,11 @@
-import { Component, computed, effect, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  computed,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { SpeakersService } from './services';
 import { SpeakerCardComponent } from './components';
 import {
@@ -8,6 +15,7 @@ import {
 } from '@angular/forms';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { debounce, debounceTime } from 'rxjs';
+import { Speaker } from '../shared/interfaces';
 
 @Component({
   selector: 'app-speakers',
@@ -16,12 +24,13 @@ import { debounce, debounceTime } from 'rxjs';
   templateUrl: './speakers.component.html',
   styleUrl: './speakers.component.scss',
 })
-export class SpeakersComponent {
+export class SpeakersComponent implements OnInit {
   private speakersService = inject(SpeakersService);
 
   filter = new FormControl<string | null>(null);
 
-  private speakers = this.speakersService.getSpeakers();
+  private speakers = signal<Speaker[]>([]);
+  private page = signal(1);
   private filterString = toSignal(
     this.filter.valueChanges.pipe(debounceTime(500)),
   );
@@ -40,4 +49,21 @@ export class SpeakersComponent {
         speaker.name.last.toLowerCase().includes(filterString),
     );
   });
+
+  ngOnInit(): void {
+    this.speakersService.getSpeakers(this.page()).subscribe(({ results }) => {
+      this.speakers.set(results);
+    });
+  }
+
+  getMoreSpeakers(): void {
+    if (this.page()) {
+      this.speakersService
+        .getSpeakers(this.page()! + 1)
+        .subscribe(({ info, results }) => {
+          this.speakers.update((speakers) => [...speakers, ...results]);
+          this.page.set(info.page);
+        });
+    }
+  }
 }

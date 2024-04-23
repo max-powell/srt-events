@@ -26,7 +26,7 @@ const mockSpeaker: Speaker = {
   nat: 'DE',
 };
 
-fdescribe('SpeakerCardComponent', () => {
+describe('SpeakerCardComponent', () => {
   let component: SpeakerCardComponent;
   let fixture: ComponentFixture<SpeakerCardComponent>;
 

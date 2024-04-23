@@ -14,8 +14,14 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 2rem;
+  margin-bottom: 2rem;
 
   & > * {
     flex: 0 1 auto;
   }
+}
+
+.more-speakers {
+  display: block;
+  margin: 0 auto;
 }

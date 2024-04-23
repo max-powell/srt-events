@@ -1,9 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, Signal, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { Speaker } from '../../../shared/interfaces';
+import { Injectable, inject } from '@angular/core';
 import { RandomuserResponse } from '../../interfaces';
-import { map } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,11 +9,9 @@ import { map } from 'rxjs';
 export class SpeakersService {
   private httpClient = inject(HttpClient);
 
-  getSpeakers(): Signal<Speaker[] | undefined> {
-    return toSignal(
-      this.httpClient
-        .get<RandomuserResponse>(`https://randomuser.me/api/?results=20&page=1`)
-        .pipe(map((res) => res.results)),
+  getSpeakers(page = 1): Observable<RandomuserResponse> {
+    return this.httpClient.get<RandomuserResponse>(
+      `https://randomuser.me/api/?results=9&page=${page}`,
     );
   }
 }
