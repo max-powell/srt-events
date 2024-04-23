@@ -1,7 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SpeakerCardComponent } from './speaker-card.component';
-import { Speaker } from '../../../shared/interfaces';
+
+import { SpeakerDetailComponent } from './speaker-detail.component';
+import { Navigation, NavigationExtras, Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
+import { Speaker } from '../shared/interfaces';
 
 const mockSpeaker: Speaker = {
   name: {
@@ -21,29 +23,37 @@ const mockSpeaker: Speaker = {
   },
   nat: 'DE',
 };
+const mockRouter = {
+  getCurrentNavigation() {
+    return {
+      extras: {
+        state: { speaker: mockSpeaker },
+      } as NavigationExtras,
+    } as Navigation;
+  },
+} as Router;
 
-describe('SpeakerCardComponent', () => {
-  let component: SpeakerCardComponent;
-  let fixture: ComponentFixture<SpeakerCardComponent>;
+describe('SpeakerDetailComponent', () => {
+  let component: SpeakerDetailComponent;
+  let fixture: ComponentFixture<SpeakerDetailComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SpeakerCardComponent],
+      imports: [SpeakerDetailComponent],
+      providers: [{ provide: Router, useValue: mockRouter }],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SpeakerCardComponent);
+    fixture = TestBed.createComponent(SpeakerDetailComponent);
     component = fixture.componentInstance;
-    fixture.componentRef.setInput('speaker', mockSpeaker);
     fixture.detectChanges();
   });
 
   it('displays the speaker information correctly', () => {
-    const cardBody = fixture.debugElement.query(By.css('.speaker-card__body'))
+    const cardBody = fixture.debugElement.query(By.css('.speaker-detail'))
       .nativeElement as HTMLDivElement;
     expect(cardBody.textContent).toContain(
       `${mockSpeaker.name.first} ${mockSpeaker.name.last}`,
     );
-    expect(cardBody.textContent).toContain('🇩🇪');
     expect(cardBody.textContent).toContain(
       `${mockSpeaker.location.city}, ${mockSpeaker.location.country}`,
     );

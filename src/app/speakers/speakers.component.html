@@ -5,7 +5,9 @@
 </div>
 <div class="speaker-list">
   @for (speaker of filteredSpeakers(); track $index) {
-    <app-speaker-card [speaker]="speaker"></app-speaker-card>
+    <a routerLink="/speaker-detail" [state]="{ speaker }">
+      <app-speaker-card [speaker]="speaker"></app-speaker-card>
+    </a>
   }
 </div>
 <button class="more-speakers" (click)="getMoreSpeakers()">

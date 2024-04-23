@@ -6,10 +6,10 @@ import {
 } from '@angular/core/testing';
 import { SpeakersComponent } from './speakers.component';
 import { SpeakersService } from './services';
-import { signal } from '@angular/core';
 import { Speaker } from '../shared/interfaces';
 import { of } from 'rxjs';
 import { RandomuserResponse } from './interfaces';
+import { ActivatedRoute } from '@angular/router';
 
 const mockSpeakers: Speaker[] = [
   {
@@ -85,6 +85,8 @@ const mockAdditionalResponse: RandomuserResponse = {
   results: mockAdditionalSpeakers,
 };
 
+const mockActivatedRoute = {} as ActivatedRoute;
+
 describe('SpeakersComponent', () => {
   let component: SpeakersComponent;
   let fixture: ComponentFixture<SpeakersComponent>;
@@ -97,7 +99,10 @@ describe('SpeakersComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SpeakersComponent],
-      providers: [{ provide: SpeakersService, useValue: mockSpeakersService }],
+      providers: [
+        { provide: SpeakersService, useValue: mockSpeakersService },
+        { provide: ActivatedRoute, useValue: mockActivatedRoute },
+      ],
     }).compileComponents();
 
     mockSpeakersService.getSpeakers.and.returnValues(

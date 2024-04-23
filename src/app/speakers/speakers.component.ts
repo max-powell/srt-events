@@ -1,26 +1,16 @@
-import {
-  Component,
-  OnInit,
-  computed,
-  effect,
-  inject,
-  signal,
-} from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { SpeakersService } from './services';
 import { SpeakerCardComponent } from './components';
-import {
-  FormControl,
-  FormControlDirective,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { debounce, debounceTime } from 'rxjs';
 import { Speaker } from '../shared/interfaces';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-speakers',
   standalone: true,
-  imports: [SpeakerCardComponent, ReactiveFormsModule],
+  imports: [SpeakerCardComponent, ReactiveFormsModule, RouterLink],
   templateUrl: './speakers.component.html',
   styleUrl: './speakers.component.scss',
 })
