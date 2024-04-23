@@ -1,0 +1,8 @@
+<img [src]="speaker().picture.large" class="speaker-card__img" alt="" />
+<div class="speaker-card__body">
+  <p class="speaker-card__name">
+    {{ speaker().name.first }} {{ speaker().name.last }} {{ flagEmoji() }}
+  </p>
+  <p>{{ speaker().location.city }}, {{ speaker().location.country }}</p>
+  <p>{{ speaker().email }}</p>
+</div>

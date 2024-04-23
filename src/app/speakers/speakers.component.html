@@ -1,0 +1,6 @@
+<h2 class="heading">This year's speakers:</h2>
+<div class="speaker-list">
+  @for (speaker of speakers(); track $index) {
+    <app-speaker-card [speaker]="speaker"></app-speaker-card>
+  }
+</div>

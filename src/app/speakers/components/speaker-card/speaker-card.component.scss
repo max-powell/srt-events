@@ -1,0 +1,29 @@
+$border: 1px solid grey;
+
+:host {
+  display: block;
+  width: 22rem;
+  border: $border;
+  border-radius: 1rem;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.speaker-card {
+  &__img {
+    width: 100%;
+    border-bottom: $border;
+  }
+
+  &__body {
+    padding-left: 1rem;
+
+    p {
+      text-overflow: ellipsis;
+    }
+  }
+
+  &__name {
+    font-weight: 700;
+  }
+}
